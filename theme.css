@@ -1,0 +1,60 @@
+/* Style for tables */
+table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse; 
+}
+
+table th, table td {
+    padding: 12px; 
+    text-align: left; 
+    border-bottom: 1px solid #ddd; 
+}
+
+table th {
+    background-color: #f5f5f5;
+    font-weight: bold; 
+}
+
+
+table td {
+    background-color: #fff; 
+}
+
+.service__table {
+    width: 100%; 
+    margin-top: 20px;
+    border-collapse: collapse;
+    grid-column: span 2;
+  }
+  
+  .service__table th, .service__table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+
+/* Style for section */
+.section__container {
+    max-width: var(--max-width);
+    margin: auto; 
+    padding: 5rem 1rem; 
+}
+
+
+.section__header {
+    font-size: 3rem;
+    font-weight: 500;
+    font-family: var(--header-font-1); 
+    color: var(--primary-color); 
+    text-align: center; 
+    line-height: 3.75rem; 
+    text-shadow: 2px 2px var(--secondary-color); 
+}
+
+
+.section__description {
+    font-weight: 500;
+    color: var(--text-dark);
+    line-height: 1.75rem; 
+}
