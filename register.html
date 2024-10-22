@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="common.css" />
+    <title>GB FOOD | Register</title>
+  </head>
+  <body>
+<div class="container">
+  <div class="card">
+    <h2>Register</h2>
+    <p class="card__p">Welcome to the register page. Please fill out the form to create your new account</p>
+    <form id="registerForm">
+      <!-- Username Field -->
+      <div class="input__group">
+        <input type="text" id="username" placeholder="Username" class="input__field" />
+        <span id="icon-username-success" class="icon__success">✔️</span>
+        <span id="icon-username-error" class="icon__error">❌</span>
+      </div>
+      <p id="error-username" class="input__error"></p>
+
+      <!-- Email Field -->
+      <div class="input__group">
+        <input type="email" id="email" placeholder="Email" class="input__field" />
+        <span id="icon-email-success" class="icon__success">✔️</span>
+        <span id="icon-email-error" class="icon__error">❌</span>
+      </div>
+      <p id="error-email" class="input__error"></p>
+
+      <!-- Password Field -->
+      <div class="input__group">
+        <input type="password" id="password" placeholder="Password" class="input__field" />
+        <span id="icon-password-success" class="icon__success">✔️</span>
+        <span id="icon-password-error" class="icon__error">❌</span>
+      </div>
+      <p id="error-password" class="input__error"></p>
+
+      <button type="submit" class="custom__btn">Register</button>
+    </form>
+    <p class="register__link">
+      Already a client? <a href="login.html">Login here</a>
+    </p>
+  </div>
+</div>
+
+<script>
+    const form = document.getElementById("registerForm");
+    const username = document.getElementById("username");
+    const email = document.getElementById("email");
+    const password = document.getElementById("password");
+  
+    const errorUsername = document.getElementById("error-username");
+    const errorEmail = document.getElementById("error-email");
+    const errorPassword = document.getElementById("error-password");
+  
+    const iconUsernameSuccess = document.getElementById("icon-username-success");
+    const iconUsernameError = document.getElementById("icon-username-error");
+    const iconEmailSuccess = document.getElementById("icon-email-success");
+    const iconEmailError = document.getElementById("icon-email-error");
+    const iconPasswordSuccess = document.getElementById("icon-password-success");
+    const iconPasswordError = document.getElementById("icon-password-error");
+  
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+
+    function generateRandomId() {
+        return '_' + Math.random().toString(36).substr(2, 9);
+    }
+  
+    function validateEmailFormat(email) {
+      const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return re.test(String(email).toLowerCase());
+    }
+  
+    function validatePasswordComplexity(password) {
+      if (password === "") {
+        return false;
+      }
+      const lengthValid = password.length >= 8;
+      const hasUppercase = /[A-Z]/.test(password);
+      const hasNumber = /[0-9]/.test(password);
+  
+      return lengthValid && hasUppercase && hasNumber;
+    }
+  
+    function validateField(field, errorMessageElement, iconSuccess, iconError) {
+      const value = field.value.trim();
+      if (value === "") {
+        field.style.border = "2px solid red";
+        errorMessageElement.textContent = "This field is required";
+        iconSuccess.style.display = "none";
+        iconError.style.display = "inline";
+        return false;
+      } else {
+        field.style.border = "2px solid green";
+        errorMessageElement.textContent = "";
+        iconSuccess.style.display = "inline";
+        iconError.style.display = "none";
+        return true;
+      }
+    }
+  
+    function validateForm() {
+      const isUsernameValid = validateField(
+        username,
+        errorUsername,
+        iconUsernameSuccess,
+        iconUsernameError
+      );
+  
+      const isEmailValid = validateField(
+        email,
+        errorEmail,
+        iconEmailSuccess,
+        iconEmailError
+      );
+  
+      if (isEmailValid && !validateEmailFormat(email.value)) {
+        errorEmail.textContent = "Invalid email format";
+        email.style.border = "2px solid red";
+        iconEmailSuccess.style.display = "none";
+        iconEmailError.style.display = "inline";
+        return false;
+      }
+  
+      const isPasswordValid = validateField(
+        password,
+        errorPassword,
+        iconPasswordSuccess,
+        iconPasswordError
+      );
+  
+      if (isPasswordValid && !validatePasswordComplexity(password.value)) {
+        errorPassword.textContent =
+          "Password must be at least 8 characters long, contain an uppercase letter and a number.";
+        password.style.border = "2px solid red";
+        iconPasswordSuccess.style.display = "none";
+        iconPasswordError.style.display = "inline";
+        return false;
+      }
+  
+      return isUsernameValid && isEmailValid && isPasswordValid;
+    }
+  
+    username.oninput = () => validateField(username, errorUsername, iconUsernameSuccess, iconUsernameError);
+    email.oninput = () => {
+      const isValid = validateField(email, errorEmail, iconEmailSuccess, iconEmailError);
+      if (isValid && !validateEmailFormat(email.value)) {
+        errorEmail.textContent = "Invalid email format";
+        email.style.border = "2px solid red";
+        iconEmailSuccess.style.display = "none";
+        iconEmailError.style.display = "inline";
+      }
+    };
+    password.oninput = () => {
+      const isValid = validateField(password, errorPassword, iconPasswordSuccess, iconPasswordError);
+      if (isValid && !validatePasswordComplexity(password.value)) {
+        errorPassword.textContent =
+          "Password must be at least 8 characters long, contain an uppercase letter and a number.";
+        password.style.border = "2px solid red";
+        iconPasswordSuccess.style.display = "none";
+        iconPasswordError.style.display = "inline";
+      }
+    };
+  
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+      if (validateForm()) {
+        const emailExists = users.some(user => user.email === email.value);
+        if (emailExists) {
+          errorEmail.textContent = "This email is already taken.";
+          email.style.border = "2px solid red";
+          iconEmailSuccess.style.display = "none";
+          iconEmailError.style.display = "inline";
+          return;
+        }
+  
+        const newUser = {
+          id: generateRandomId(),
+          username: username.value,
+          email: email.value,
+          password: password.value,
+        };
+        users.push(newUser);
+        localStorage.setItem("users", JSON.stringify(users));
+  
+        alert("Registration successful!");
+        form.reset();
+  
+        username.style.border = "";
+        email.style.border = "";
+        password.style.border = "";
+        iconUsernameSuccess.style.display = "none";
+        iconUsernameError.style.display = "none";
+        iconEmailSuccess.style.display = "none";
+        iconEmailError.style.display = "none";
+        iconPasswordSuccess.style.display = "none";
+        iconPasswordError.style.display = "none";
+      }
+    });
+  </script>
+  </body>
+</html>

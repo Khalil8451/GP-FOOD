@@ -490,3 +490,104 @@ nav {
     gap: 2rem;
   }
 }
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f7f7f7;
+}
+
+.card {
+  background-color: white;
+  padding: 40px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  width: 350px;
+  text-align: center;
+}
+
+.card h2 {
+  margin-bottom: 20px;
+  font-size: 26px;
+  color: #333;
+}
+
+.card__p {
+  margin-bottom: 20px;
+  font-size: 16px;
+  color: #666;
+}
+
+/* Input Field Styles */
+.input__field {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.input__error {
+  color: red;
+  font-size: 12px; /* Adjust this if needed */
+  line-height: 1.2; /* Controls the spacing between lines */
+  margin-top: 5px;
+  text-align: left;
+}
+
+.icon__success,
+.icon__error {
+  display: none;
+  font-size: 16px;
+  margin-left: 5px;
+}
+
+.input__group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Button Styles */
+.custom__btn {
+  width: 100%;
+  padding: 10px;
+  background-color: #f8b400;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.custom__:hover {
+  background-color: #d18d00;
+}
+
+/* Link Styles */
+.register__link {
+  margin-top: 20px;
+  display: block;
+  font-size: 14px;
+  color: #555;
+}
+
+.register__link a {
+  color: #f8b400;
+  text-decoration: none;
+}
+
+.register__link a:hover {
+  text-decoration: underline;
+}
+
+.welcome-username {
+  font-weight: 600;
+  white-space: nowrap;
+  color: black;
+  transition: 0.3s;
+}
